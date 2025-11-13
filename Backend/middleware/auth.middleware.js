@@ -8,7 +8,7 @@ const authMiddleware = async (req, res, next) => {
     
     if (!token) {
         return res.status(401).json({
-            message: "Provide token",
+            message: "unauthorized access",
             error: true,
             success: false,
         });

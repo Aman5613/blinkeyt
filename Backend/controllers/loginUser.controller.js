@@ -34,6 +34,14 @@ export const loginuserController = async (req, res) => {
       });
     }
 
+    if(user.status !== "Active"){
+      return res.status(400).json({
+        message: `your account is ${user.status}, please contact administrator`,
+        error: true,
+        success: false,
+      });
+    }
+
     const refreshToken = await generateRefreshToken(user._id );
     const accessToken = await generateAccessToken(user._id);
 
