@@ -1,6 +1,9 @@
 import { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
+import Home from "../src/pages/Home";
+import Search from "../src/pages/Search";
+import Login from "../src/pages/Login";
+import Register from "../src/pages/Register";
 
 // Loading fallback component
 const PageLoader = () => (
@@ -14,6 +17,9 @@ function AppRoutes() {
     <Suspense fallback={<PageLoader />}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/s" element={<Search />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Suspense>
   );
