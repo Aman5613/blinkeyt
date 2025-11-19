@@ -1,7 +1,5 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { FaEyeSlash } from "react-icons/fa";
-import { FaEye } from "react-icons/fa";
 import insatance from "../utils/axios";
 import summary from "../common/summaryAPI";
 import getErrorMessage from "../utils/axiosError";
@@ -9,11 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
   const [form, setForm] = useState({
     email: "",
-    password: "",
   });
 
   // handle input change
@@ -26,9 +22,8 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await insatance.post(summary.login.url, {
+      const response = await insatance.put(summary.forgetPassword.url, {
         email: form.email,
-        password: form.password,
       });
 
       if (response.data.error) {
@@ -40,12 +35,11 @@ const Login = () => {
         toast.success(response.data.message);
         setForm({
           email: "",
-          password: "",
         });
-        navigate("/");
+        navigate(`/otp-verification?${form.email}`);
       }
 
-      console.log("Login Response:", response);
+    //   console.log("Forget Password Response:", response);
     } catch (error) {
       getErrorMessage(error);
       return;
@@ -73,54 +67,14 @@ const Login = () => {
             />
           </div>
 
-          {/* Password */}
-          <div>
-            <label name="password" className="block mb-1 font-medium">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                required
-                className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-yellow-500 outline-none"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2 text-gray-500 text-xl"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
-            <p
-              className="text-right text-sm text-red-600 cursor-pointer"
-              onClick={() => navigate("/forget-password")}
-            >
-              Forget Password?
-            </p>
-          </div>
-
           {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-green-800 text-white py-2 rounded-lg text-lg hover:bg-green-900 transition font-bold cursor-pointer active:scale-95"
           >
-            Login
+            Submit
           </button>
         </form>
-
-        <p className="text-center">
-          Don't have an account?{" "}
-          <span
-            className="text-green-800 cursor-pointer hover:underline font-semibold"
-            onClick={() => navigate("/register")}
-          >
-            Register
-          </span>
-        </p>
       </div>
     </div>
   );

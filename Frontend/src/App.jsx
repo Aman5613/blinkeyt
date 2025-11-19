@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "../routers/appRoutes";
+import AppRoutes from "./routers/appRoutes";
 import Header from "../src/components/Header";
 import Footer from "../src/components/Footer";
 import { Toaster } from "react-hot-toast";
@@ -8,11 +8,11 @@ import { Toaster } from "react-hot-toast";
 const App = () => {
   return (
     <BrowserRouter>
-      <Header />
-      <main>
+      {/* <Header /> */}
+      <main className="min-h-screen">
         <AppRoutes />
       </main>
-      <Footer />
+      {/* <Footer /> */}
       <Toaster />
     </BrowserRouter>
   );
