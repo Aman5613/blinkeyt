@@ -4,11 +4,22 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaRegUserCircle } from "react-icons/fa";
 import useMobile from "../hooks/useMobile";
 import { GiShoppingCart } from "react-icons/gi";
+import { useSelector } from "react-redux";
+import { IoMenu } from "react-icons/io5";
+import { FaAngleUp, FaAngleDown } from "react-icons/fa";
+import { useState } from "react";
+import Usermenu from "./userMenu";
+
 
 const Header = () => {
   const naviagte = useNavigate();
   const isMobile = useMobile();
   const location = useLocation();
+  const user = useSelector((state) => state.user);
+  const [menu, setMenu] = useState(false);
+
+
+  // console.log("User from Header", user);
 
   const isSearchPage = location.pathname === "/s";
 
@@ -16,7 +27,6 @@ const Header = () => {
 
   return (
     <header className="min-h-16 flex flex-col items-center justify-center bg-white w-full gap-2  px-4 py-2 md:py-3 border-gray-300 sticky top-0 ">
-      
       {/* Hide header content on mobile search page */}
       {isMobile && isSearchPage ? null : (
         // Desktop and non-search page header content
@@ -33,15 +43,36 @@ const Header = () => {
 
           {/* login and add to cart */}
           <div className="">
-            
             {/* // button for mobile view */}
-            <button className="md:hidden">
-              <FaRegUserCircle size={28} />
-            </button>
+            {user?.name ? (
+              <button className="md:hidden">
+                <IoMenu size={28} />
+              </button>
+            ) : (
+              <button className="md:hidden" onClick={() => naviagte("/login")}>
+                <FaRegUserCircle size={28} />
+              </button>
+            )}
 
             {/* login and cart for desktop view */}
             <div className="hidden md:flex gap-2 items-center">
-              <div className="font-bold hover:bg-yellow-600 active:scale-95 cursor-pointer bg-yellow-500 text-white px-4 py-2 rounded-lg" onClick={() => naviagte("/login")}>Login</div>
+              {user?.name ? (
+                <div className="font-bold hover:bg-yellow-600 active:scale-95 cursor-pointer bg-yellow-500 text-black px-4 py-2 rounded-lg flex items-center gap-2" onClick={() => setMenu(!menu)}>
+                  My Account
+                  {menu ? <FaAngleUp /> : <FaAngleDown />}
+
+                  {menu && (
+                    <Usermenu />
+                  )}
+                </div>
+              ) : (
+                <div
+                  className="font-bold hover:bg-yellow-600 active:scale-95 cursor-pointer bg-yellow-500 text-white px-4 py-2 rounded-lg"
+                  onClick={() => naviagte("/login")}
+                >
+                  Login
+                </div>
+              )}
               <div className="flex gap-2 bg-green-800 hover:bg-green-900 cursor-pointer text-white px-4 py-2 rounded-lg font-bold active:scale-95 transition-transform">
                 <GiShoppingCart size={25} className="" />
                 {/* <p>My cart</p> */}
@@ -50,7 +81,6 @@ const Header = () => {
           </div>
         </div>
       )}
-
 
       {/* Mobile search bar */}
       <div className="container mx-auto w-full md:hidden">

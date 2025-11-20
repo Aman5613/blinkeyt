@@ -21,7 +21,14 @@ export const summary = {
     method: "PUT",
     url: `/api/user/reset-password`,
   },
-  
+  refreshToken: {
+    method: "POST",
+    url: `/api/user/refresh-token`,
+  },
+  getuserDetails: {
+    method: "GET",
+    url: "/api/user/get-user-detail",
+  },
 };
 
 

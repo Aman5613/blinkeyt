@@ -38,6 +38,15 @@ const Login = () => {
 
       if (response.data.success) {
         toast.success(response.data.message);
+
+        // refresh token -> localStorage  hona chahiye
+        // access token -> cookies (httpOnly) hona chahiye
+
+        // store tokens in localStorage
+        localStorage.setItem("accessToken", response.data.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.data.refreshToken);
+
+
         setForm({
           email: "",
           password: "",

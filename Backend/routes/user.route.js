@@ -11,6 +11,7 @@ import { forgetpasswordController } from "../controllers/forgetPassword.controll
 import verifyOTP from "../controllers/verifyForgetPassOTP.controller.js";
 import resetPassword from "../controllers/resetPassword.controller.js";
 import refreshTokenController from "../controllers/refreshToken.controller.js";
+import getuserDetail from "../controllers/getUserDetails.controller.js";
 
 const userRouter = Router();
 
@@ -25,6 +26,7 @@ userRouter.put('/forget-password', forgetpasswordController)
 userRouter.put('/verify-forget-pass-otp', verifyOTP)
 userRouter.put('/reset-password', resetPassword)
 userRouter.get('/refresh-token', refreshTokenController)
+userRouter.get('/get-user-detail', authMiddleware, getuserDetail)
 
 
 
