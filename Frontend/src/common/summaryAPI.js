@@ -29,6 +29,10 @@ export const summary = {
     method: "GET",
     url: "/api/user/get-user-detail",
   },
+  logout : {
+    method : "GET",
+    url : "/api/user/logout"
+  }
 };
 
 

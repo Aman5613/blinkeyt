@@ -12,9 +12,9 @@ const App = () => {
   const dispatch = useDispatch();
   const getUserDetails = async () => {
     const user = await getuserdetails();
-    console.log("User details in App.jsx", user);
+    // console.log("User details in App.jsx", user);
     dispatch(setUserDetails(user));
-    return user;
+    // return user;
   };
 
   useEffect(() => {
