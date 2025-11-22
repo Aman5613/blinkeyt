@@ -23,7 +23,7 @@ export async function uploadavatarController(req, res) {
           message: "Avatar uploaded successfully",
           error: false,
           success: true,
-        //   data: result,
+          url: result.secure_url,
         });
       })
       .catch((error) => {

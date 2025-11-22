@@ -6,10 +6,13 @@ import insatance from "../utils/axios";
 import summary from "../common/summaryAPI";
 import getErrorMessage from "../utils/axiosError";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../store/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch()
 
   const [form, setForm] = useState({
     email: "",
@@ -51,6 +54,9 @@ const Login = () => {
           email: "",
           password: "",
         });
+
+        dispatch(setUserDetails(response.data.user))
+        
         navigate("/");
       }
 

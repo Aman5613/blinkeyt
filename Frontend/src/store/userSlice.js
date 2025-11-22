@@ -24,9 +24,14 @@ const userSlice = createSlice({
     setUserDetails: (state, action) => {
         return { ...state, ...action.payload };
     },
+    logout : (state, action) => {
+      return initialState;
+    },
+    setAvatar: (state, action) => {
+      state.avatar = action.payload;
+    },
   },
 });
 
-export const { setUserDetails } = userSlice.actions;
-
+export const { setUserDetails, logout, setAvatar } = userSlice.actions;
 export default userSlice.reducer;

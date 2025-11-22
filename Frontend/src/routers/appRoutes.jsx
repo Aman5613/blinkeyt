@@ -7,7 +7,11 @@ import Register from "../pages/Register";
 import ForgetPass from "../pages/ForgetPass";
 import OtpVerification from "../pages/OtpVerification";
 import ResetPassword from "../pages/ResetPassword";
-
+import UsermenuLayout from "../layouts/UsermenuLayout";
+import ProfilePage from "../pages/ProfilePage";
+import MainLayout from "../layouts/mainLayout";
+import Myorder from "../pages/Myorder";
+import Address from "../pages/Address";
 // Loading fallback component
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -19,13 +23,21 @@ function AppRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/s" element={<Search />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forget-password" element={<ForgetPass />} />
         <Route path="/otp-verification" element={<OtpVerification />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+
+        <Route path="/" element={<MainLayout />}>
+          <Route path="" element={<Home />} />
+          <Route path="s" element={<Search />} />
+          <Route path="dashboard" element={<UsermenuLayout />}>
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="orders" element={<Myorder />} />
+            <Route path="addresses" element={<Address />} />
+          </Route>
+        </Route>
       </Routes>
     </Suspense>
   );

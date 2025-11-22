@@ -29,10 +29,14 @@ export const summary = {
     method: "GET",
     url: "/api/user/get-user-detail",
   },
-  logout : {
-    method : "GET",
-    url : "/api/user/logout"
-  }
+  logout: {
+    method: "GET",
+    url: "/api/user/logout",
+  },
+  uploadAvatar: {
+    method: "PUT",
+    url: "/api/user/upload-avatar",
+  },
 };
 
 

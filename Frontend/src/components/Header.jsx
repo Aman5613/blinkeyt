@@ -16,30 +16,35 @@ const Header = () => {
   const isMobile = useMobile();
   const location = useLocation();
   const user = useSelector((state) => state.user);
-  const [menu, setMenu] = useState(false);
 
-  // console.log("User from Header", user);
 
   const isSearchPage = location.pathname === "/s";
 
-  // console.log("isMobile", isMobile);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [desktopMenu, setDesktopMenu] = useState(false);
 
-  const menuRef = useRef(null);
+  const mobileMenuRef = useRef();
+  const desktopMenuRef = useRef();
 
   // Close menu when clicking outside
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMenu(false);
+    const handler = (e) => {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) {
+        setMobileMenu(false);
       }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+      if (
+        desktopMenuRef.current &&
+        !desktopMenuRef.current.contains(e.target)
+      ) {
+        setDesktopMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   return (
-    <header className="min-h-16 flex flex-col items-center justify-center bg-white w-full gap-2  px-4 py-2 md:py-3 border-gray-300 sticky top-0 ">
+    <header className="min-h-16 flex flex-col items-center justify-center bg-white w-full gap-2  px-4 py-2 md:py-3 sticky top-0 ">
       {/* Hide header content on mobile search page */}
       {isMobile && isSearchPage ? null : (
         // Desktop and non-search page header content
@@ -56,64 +61,67 @@ const Header = () => {
 
           {/* login and add to cart */}
           <div className="relative">
-            {/* Mobile View Button */}
+            {/* MOBILE VIEW */}
             {user?.name ? (
-              <button
-                className="md:hidden"
-                onClick={() => setMenu((prev) => !prev)}
-              >
-                {menu ? <RxCross2 size={28} /> : <IoMenu size={28} />}
+              <div className="relative md:hidden">
+                {/* Mobile Toggle Button */}
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setMobileMenu((prev) => !prev)}
+                >
+                  {mobileMenu ? <RxCross2 size={28} /> : <IoMenu size={28} />}
+                </button>
 
-                {/* Mobile User Menu */}
-                {menu && (
+                {/* Mobile Dropdown */}
+                {mobileMenu && (
                   <div
-                    ref={menuRef}
+                    ref={mobileMenuRef}
                     className="absolute top-12 right-0 z-50 bg-white shadow-lg rounded-lg"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    <Usermenu />
+                    <Usermenu closeMenu={() => setMobileMenu(false)} />
                   </div>
                 )}
-              </button>
+              </div>
             ) : (
               <button className="md:hidden" onClick={() => navigate("/login")}>
                 <FaRegUserCircle size={28} />
               </button>
             )}
 
-            {/* Desktop View */}
+            {/* DESKTOP VIEW */}
             <div className="hidden md:flex gap-4 items-center">
-              {/* Account / Login Button */}
               {user?.name ? (
                 <div className="relative">
                   <button
-                    className="flex items-center gap-2 font-semibold bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-600 active:scale-97 transition"
-                    onClick={() => setMenu((prev) => !prev)}
+                    className="flex items-center gap-2 font-semibold bg-yellow-500 text-black px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
+                    onClick={() => setDesktopMenu((prev) => !prev)}
                   >
                     My Account
-                    {menu ? <FaAngleUp /> : <FaAngleDown />}
+                    {desktopMenu ? <FaAngleUp /> : <FaAngleDown />}
                   </button>
 
-                  {/* Desktop User Menu */}
-                  {menu && (
+                  {/* Desktop Dropdown */}
+                  {desktopMenu && (
                     <div
-                      ref={menuRef}
+                      ref={desktopMenuRef}
                       className="absolute top-12 left-0 z-50 bg-white shadow-lg rounded-lg"
                     >
-                      <Usermenu />
+                      <Usermenu closeMenu={() => setDesktopMenu(false)} />
                     </div>
                   )}
                 </div>
               ) : (
                 <button
-                  className="font-semibold bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 active:scale-95 transition"
+                  className="font-semibold bg-yellow-500 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition"
                   onClick={() => navigate("/login")}
                 >
                   Login
                 </button>
               )}
 
-              {/* Shopping Cart */}
-              <button className="flex items-center gap-2 bg-green-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-900 active:scale-95 transition">
+              {/* Cart */}
+              <button className="flex items-center gap-2 bg-green-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-900 transition">
                 <GiShoppingCart size={25} />
               </button>
             </div>

@@ -58,6 +58,7 @@ export const loginuserController = async (req, res) => {
       message: "user logged in successfully",
       error: false,
       success: true,
+      user : user,
       data: {
         refreshToken: refreshToken,
         accessToken: accessToken,
