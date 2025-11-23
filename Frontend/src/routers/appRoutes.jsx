@@ -12,6 +12,10 @@ import ProfilePage from "../pages/ProfilePage";
 import MainLayout from "../layouts/mainLayout";
 import Myorder from "../pages/Myorder";
 import Address from "../pages/Address";
+import Category from "../pages/Category";
+import SubCategory from "../pages/SubCategory";
+import UploadProduct from "../pages/UploadProduct";
+import Product from "../pages/AdminProduct";
 // Loading fallback component
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -36,6 +40,10 @@ function AppRoutes() {
             <Route path="profile" element={<ProfilePage />} />
             <Route path="orders" element={<Myorder />} />
             <Route path="addresses" element={<Address />} />
+            <Route path="category" element={<Category />} />
+            <Route path="subcategory" element={<SubCategory />} />
+            <Route path="upload-products" element={<UploadProduct />} />
+            <Route path="products" element={<Product />} />
           </Route>
         </Route>
       </Routes>

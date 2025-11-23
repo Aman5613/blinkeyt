@@ -107,7 +107,7 @@ const Header = () => {
                       ref={desktopMenuRef}
                       className="absolute top-12 left-0 z-50 bg-white shadow-lg rounded-lg"
                     >
-                      <Usermenu closeMenu={() => setDesktopMenu(false)} />
+                      <Usermenu close={() => setDesktopMenu(false)} />
                     </div>
                   )}
                 </div>

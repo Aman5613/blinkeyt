@@ -37,6 +37,10 @@ export const summary = {
     method: "PUT",
     url: "/api/user/upload-avatar",
   },
+  updateUser: {
+    method: "PUT",
+    url: "/api/user/update-user",
+  },
 };
 
 

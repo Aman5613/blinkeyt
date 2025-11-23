@@ -8,8 +8,8 @@ const UsermenuLayout = () => {
       <div className="container mx-auto" style={{ minHeight: "100vh" }}>
         <div className="flex">
           {/* LEFT SIDEBAR (Sticky) */}
-          <div className="hidden md:block w-64 sticky top-16 h-fit">
-            <div className="hidden md:flex bg-white ">
+          <div className="hidden md:block w-62 sticky top-16 h-fit">
+            <div className="hidden md:flex bg-white w-full">
               <Usermenu />
             </div>
           </div>

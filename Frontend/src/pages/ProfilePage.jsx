@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
 import ImageUploadModal from "../components/ImageuploadModel";
+import UpdateUser from "../components/UpdateUser";
 
 const ProfilePage = () => {
   const [openuploadModal, setOpenUploadModal] = useState(false);
@@ -16,7 +17,7 @@ const ProfilePage = () => {
           <img
             src={user.avatar}
             alt={user?.name || "User"}
-            className="object-cover w-full h-full rounded-full"
+            className="object-cover w-full h-full rounded-full border"
           />
         ) : (
           <FaUserAlt className="w-full h-full p-2" />
@@ -29,6 +30,7 @@ const ProfilePage = () => {
         Edit Avatar
       </button>
       {openuploadModal && <ImageUploadModal close={() => setOpenUploadModal(false)} />}
+        <UpdateUser />
     </div>
   );
 };
