@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
-import userModel from "../model/user.model.js";
-import generateAccessToken from "../utils/generateAccesstoken.js";
+import userModel from "../../model/user.model.js";
+import generateAccessToken from "../../utils/generateAccesstoken.js";
 
 async function refreshTokenController(req, res) {
   try {
-
     const authHeader = req?.headers?.authorization;
-    const refreshToken = req?.cookies?.refreshToken || (authHeader && authHeader.split(" ")[1]);
+    const refreshToken =
+      req?.cookies?.refreshToken || (authHeader && authHeader.split(" ")[1]);
 
     if (!refreshToken) {
       return res.status(400).json({

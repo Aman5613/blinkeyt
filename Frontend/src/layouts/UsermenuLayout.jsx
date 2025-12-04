@@ -15,7 +15,7 @@ const UsermenuLayout = () => {
           </div>
 
           {/* RIGHT CONTENT AREA */}
-          <div className="flex-1 p-6 min-h-screen border-l border-gray-300">
+          <div className="flex-1 min-h-screen border-l border-gray-300">
             <Outlet />
           </div>
         </div>

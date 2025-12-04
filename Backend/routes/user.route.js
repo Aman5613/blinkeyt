@@ -1,17 +1,17 @@
 import { Router } from "express";
-import registeruserController from "../controllers/registerUser.controller.js";
-import { verifyemailController } from "../controllers/verifyEmail.controller.js";
-import { loginuserController } from "../controllers/loginUser.controller.js";
+import registeruserController from "../controllers/users/registerUser.controller.js";
+import { verifyemailController } from "../controllers/users/verifyEmail.controller.js";
+import { loginuserController } from "../controllers/users/loginUser.controller.js";
 import authMiddleware from "../middleware/auth.middleware.js";
-import logoutuserController from "../controllers/logoutUser.controller.js";
+import logoutuserController from "../controllers/users/logoutUser.controller.js";
 import upload from "../middleware/multer.middleware.js";
-import { uploadavatarController } from "../controllers/uploadAvatar.controller.js";
-import { updateuserController } from "../controllers/updateUser.controller.js";
-import { forgetpasswordController } from "../controllers/forgetPassword.controller.js";
-import verifyOTP from "../controllers/verifyForgetPassOTP.controller.js";
-import resetPassword from "../controllers/resetPassword.controller.js";
-import refreshTokenController from "../controllers/refreshToken.controller.js";
-import getuserDetail from "../controllers/getUserDetails.controller.js";
+import { uploadavatarController } from "../controllers/users/uploadAvatar.controller.js";
+import { updateuserController } from "../controllers/users/updateUser.controller.js";
+import { forgetpasswordController } from "../controllers/users/forgetPassword.controller.js";
+import verifyOTP from "../controllers/users/verifyForgetPassOTP.controller.js";
+import resetPassword from "../controllers/users/resetPassword.controller.js";
+import refreshTokenController from "../controllers/users/refreshToken.controller.js";
+import getuserDetail from "../controllers/users/getUserDetails.controller.js";
 
 const userRouter = Router();
 

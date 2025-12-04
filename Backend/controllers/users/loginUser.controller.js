@@ -1,6 +1,6 @@
-import userModel from "../model/user.model.js";
-import generateRefreshToken from "../utils/generateRefreshtoken.js";
-import generateAccessToken from "../utils/generateAccesstoken.js";
+import userModel from "../../model/user.model.js";
+import generateRefreshToken from "../../utils/generateRefreshtoken.js";
+import generateAccessToken from "../../utils/generateAccesstoken.js";
 import bcryptjs from "bcryptjs";
 
 export const loginuserController = async (req, res) => {
@@ -12,7 +12,7 @@ export const loginuserController = async (req, res) => {
     }
     const { email, password } = req.body;
 
-    const user = await userModel.findOne({email});
+    const user = await userModel.findOne({ email });
 
     if (!user) {
       return res.status(400).json({
@@ -24,9 +24,7 @@ export const loginuserController = async (req, res) => {
 
     const isCorrectpass = await bcryptjs.compare(password, user.password);
 
-    
-
-    if(!isCorrectpass) {
+    if (!isCorrectpass) {
       return res.status(400).json({
         message: "password is incorrect",
         error: true,
@@ -34,7 +32,7 @@ export const loginuserController = async (req, res) => {
       });
     }
 
-    if(user.status !== "Active"){
+    if (user.status !== "Active") {
       return res.status(400).json({
         message: `your account is ${user.status}, please contact administrator`,
         error: true,
@@ -42,7 +40,7 @@ export const loginuserController = async (req, res) => {
       });
     }
 
-    const refreshToken = await generateRefreshToken(user._id );
+    const refreshToken = await generateRefreshToken(user._id);
     const accessToken = await generateAccessToken(user._id);
 
     const cookiesOption = {
@@ -58,7 +56,7 @@ export const loginuserController = async (req, res) => {
       message: "user logged in successfully",
       error: false,
       success: true,
-      user : user,
+      user: user,
       data: {
         refreshToken: refreshToken,
         accessToken: accessToken,

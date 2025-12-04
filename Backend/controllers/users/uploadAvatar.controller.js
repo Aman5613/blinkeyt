@@ -1,5 +1,5 @@
-import userModel from "../model/user.model.js";
-import uploadImageCloudinary from "../utils/uploadImage.js";
+import userModel from "../../model/user.model.js";
+import uploadImageCloudinary from "../../utils/uploadImage.js";
 
 export async function uploadavatarController(req, res) {
   try {
@@ -33,7 +33,6 @@ export async function uploadavatarController(req, res) {
           success: false,
         });
       });
-    
   } catch (error) {
     return res.status(500).json({
       message: "Failed to upload avatar : " + error.message || error,

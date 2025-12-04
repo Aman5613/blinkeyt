@@ -1,7 +1,7 @@
-import sendEmail from "../config/sendEmail.js";
-import userModel from "../model/user.model.js";
-import { generateOTP } from "../utils/generateOTP.js";
-import otpMailTemplate from "../utils/forgetPassTemplate.js";
+import sendEmail from "../../config/sendEmail.js";
+import userModel from "../../model/user.model.js";
+import { generateOTP } from "../../utils/generateOTP.js";
+import otpMailTemplate from "../../utils/forgetPassTemplate.js";
 
 export async function forgetpasswordController(req, res) {
   try {

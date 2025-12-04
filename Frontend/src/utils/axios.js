@@ -30,7 +30,7 @@ insatance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    console.log("Interceptor Error:", error.response);
+    console.log("Interceptor Error:", error.response.data);
     getErrorMessage("Interceptor Error:", error?.response?.data?.message);
 
     // !originalRequest._retry -> to prevent infinite loop

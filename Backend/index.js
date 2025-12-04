@@ -6,6 +6,8 @@ import morgan from "morgan";
 import helmet from "helmet";
 import { connectDB } from "./config/connectDB.js";
 import userRouter from "./routes/user.route.js";
+import categoryRouter from "./routes/category.routes.js";
+import uploadRouter from "./routes/upload.route.js";
 
 config();
 const app = express(); // create express app
@@ -34,6 +36,8 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/user', userRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/upload', uploadRouter);
 
 const port = 8080 || process.env.PORT;
 

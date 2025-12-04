@@ -41,6 +41,14 @@ export const summary = {
     method: "PUT",
     url: "/api/user/update-user",
   },
+  addCategory: {
+    method: "POST",
+    url: "/api/category/add-category",
+  },
+  uploadImage : {
+    method : "POST",
+    url : "/api/upload/upload-image"
+  }
 };
 
 
