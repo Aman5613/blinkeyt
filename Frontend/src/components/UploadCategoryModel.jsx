@@ -3,13 +3,15 @@ import { toast } from "react-hot-toast";
 import uploadImage from "../utils/uploadImage";
 import insatance from "../utils/axios";
 import summary from "../common/summaryAPI";
+import getErrorMessage from "../utils/axiosError";
 
-const UploadCategoryModel = ({ close }) => {
+const UploadCategoryModel = ({fetchCategories, close }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [data, setdata] = useState({
     name: "",
     image: "",
   });
+  const [Loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setdata({
@@ -20,26 +22,42 @@ const UploadCategoryModel = ({ close }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await uploadImage(data.image)
-    .then(async (res) => {
-      console.log(res.data.url);
-      
-    })
-    .catch((err) => {
-      toast.error(err);
-    })
-    // console.log(res);
+    setLoading(true);
+    try {
+      const res = await insatance({
+        ...summary.addCategory,
+        data: data,
+      });
+
+      if (res.data.success === true) {
+        toast.success(res.data.message);
+        setLoading(false);
+        close();
+        fetchCategories();
+      } else {
+        toast.error(res.data.message);
+        setLoading(false);
+      }
+
+      console.log(res);
+    } catch (error) {
+      getErrorMessage(error);
+      setLoading(false);
+    }
   };
 
-  const handleuploadImage = (e) => {
+  const handleuploadImage = async (e) => {
     const file = e.target.files[0];
     if (!file) return toast.error("Please select an image");
     else {
       setImagePreview(URL.createObjectURL(file));
-      setdata({
-        ...data,
-        image : file,
-      })
+      await uploadImage(file).then((res) => {
+        // console.log(res);
+        setdata({
+          ...data,
+          image: res?.data?.url,
+        });
+      });
     }
   };
   return (
@@ -103,7 +121,7 @@ const UploadCategoryModel = ({ close }) => {
                 Cancel
               </button>
               <button className="px-3 py-1 bg-green-800 text-white rounded hover:bg-green-900 cursor-pointer active:scale-97 font-semibold">
-                Upload
+                {Loading ? "Uploading..." : "Upload"}
               </button>
             </div>
           </form>

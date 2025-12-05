@@ -45,10 +45,14 @@ export const summary = {
     method: "POST",
     url: "/api/category/add-category",
   },
-  uploadImage : {
-    method : "POST",
-    url : "/api/upload/upload-image"
-  }
+  uploadImage: {
+    method: "POST",
+    url: "/api/upload/upload-image",
+  },
+  getCategories: {
+    method: "GET",
+    url: "/api/category/get-categories",
+  },
 };
 
 
