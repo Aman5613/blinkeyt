@@ -1,21 +1,25 @@
-import { Suspense } from "react";
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
-import Search from "../pages/Search";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import ForgetPass from "../pages/ForgetPass";
-import OtpVerification from "../pages/OtpVerification";
-import ResetPassword from "../pages/ResetPassword";
-import UsermenuLayout from "../layouts/UsermenuLayout";
-import ProfilePage from "../pages/ProfilePage";
-import MainLayout from "../layouts/mainLayout";
-import Myorder from "../pages/Myorder";
-import Address from "../pages/Address";
-import Category from "../pages/Category";
-import SubCategory from "../pages/SubCategory";
-import UploadProduct from "../pages/UploadProduct";
-import Product from "../pages/AdminProduct";
+import Admin from "./Admin";
+
+// Lazy Components
+const Home = lazy(() => import("../pages/Home"));
+const Search = lazy(() => import("../pages/Search"));
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
+const ForgetPass = lazy(() => import("../pages/ForgetPass"));
+const OtpVerification = lazy(() => import("../pages/OtpVerification"));
+const ResetPassword = lazy(() => import("../pages/ResetPassword"));
+const UsermenuLayout = lazy(() => import("../layouts/UsermenuLayout"));
+const ProfilePage = lazy(() => import("../pages/ProfilePage"));
+const MainLayout = lazy(() => import("../layouts/mainLayout"));
+const Myorder = lazy(() => import("../pages/Myorder"));
+const Address = lazy(() => import("../pages/Address"));
+const Category = lazy(() => import("../pages/Category"));
+const SubCategory = lazy(() => import("../pages/SubCategory"));
+const UploadProduct = lazy(() => import("../pages/UploadProduct"));
+const Product = lazy(() => import("../pages/AdminProduct"));
+
 // Loading fallback component
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -40,10 +44,38 @@ function AppRoutes() {
             <Route path="profile" element={<ProfilePage />} />
             <Route path="orders" element={<Myorder />} />
             <Route path="addresses" element={<Address />} />
-            <Route path="category" element={<Category />} />
-            <Route path="subcategory" element={<SubCategory />} />
-            <Route path="upload-products" element={<UploadProduct />} />
-            <Route path="products" element={<Product />} />
+            <Route
+              path="category"
+              element={
+                <Admin>
+                  <Category />
+                </Admin>
+              }
+            />
+            <Route
+              path="subcategory"
+              element={
+                <Admin>
+                  <SubCategory />
+                </Admin>
+              }
+            />
+            <Route
+              path="upload-products"
+              element={
+                <Admin>
+                  <UploadProduct />
+                </Admin>
+              }
+            />
+            <Route
+              path="products"
+              element={
+                <Admin>
+                  <Product />
+                </Admin>
+              }
+            />
           </Route>
         </Route>
       </Routes>

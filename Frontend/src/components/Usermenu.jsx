@@ -69,7 +69,7 @@ const Usermenu = ({ close }) => {
 
   return (
     <div className="bg-white min-w-62 rounded-lg p-4 z-50 w-full flex flex-col items-center justify-center">
-      <p className="font-semibold mb-3 flex items-center gap-5">
+      <div className="font-semibold mb-3 flex items-center gap-5">
         <div className="flex flex-col">
           Hello, {user?.name || "User"}{" "}
           <span className="text-red-800">{user?.role === "admin" ? "(Admin)" : ""}</span>
@@ -82,7 +82,7 @@ const Usermenu = ({ close }) => {
             close();
           }}
         />
-      </p>
+      </div>
 
       <ul className="space-y-1">
         {user.role === "admin" &&
@@ -92,7 +92,7 @@ const Usermenu = ({ close }) => {
               className="py-2 px-5 cursor-pointer rounded-md hover:bg-gray-100 active:bg-gray-200 transition"
               onClick={() => {
                 navigate(`/dashboard${item.url}`);
-                close();
+                close;
               }}
             >
               {item.name}

@@ -53,6 +53,14 @@ export const summary = {
     method: "GET",
     url: "/api/category/get-categories",
   },
+  updateCategory: {
+    method: "PUT",
+    url: `/api/category/update-category`,
+  },
+  deleteCategory: {
+    method: "DELETE",
+    url: "/api/category/delete-category",
+  },
 };
 
 

@@ -5,18 +5,21 @@ import insatance from "../utils/axios";
 import summary from "../common/summaryAPI";
 import getErrorMessage from "../utils/axiosError";
 
-const UploadCategoryModel = ({ fetchCategories, close }) => {
-  const [imagePreview, setImagePreview] = useState(null);
-  const [data, setdata] = useState({
-    name: "",
-    image: "",
+const EditCategoryModel = ({ data, fetchCategories, close }) => {
+  const [imagePreview, setImagePreview] = useState(data.image);
+  const [updatedData, setUpdatedData] = useState({
+    id: data._id,
+    name: data.name,
+    image: data.image,
   });
+
+
   const [Loading, setLoading] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
 
   const handleChange = (e) => {
-    setdata({
-      ...data,
+    setUpdatedData({
+      ...updatedData,
       [e.target.name]: e.target.value,
     });
   };
@@ -26,8 +29,8 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
     setLoading(true);
     try {
       const res = await insatance({
-        ...summary.addCategory,
-        data: data,
+        ...summary.updateCategory,
+        data: updatedData,
       });
 
       if (res.data.success === true) {
@@ -40,6 +43,7 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
         setLoading(false);
       }
 
+      console.log(res);
     } catch (error) {
       getErrorMessage(error);
       setLoading(false);
@@ -51,17 +55,15 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
     if (!file) return toast.error("Please select an image");
     else {
       setImageLoading(true);
-
       await uploadImage(file).then((res) => {
         // console.log(res);
-        setdata({
-          ...data,
+        setUpdatedData({
+          ...updatedData,
           image: res?.data?.url,
-          name: file.name.split(".")[0],
         });
+        setImagePreview(res?.data?.url);
         setImageLoading(false);
         toast.success("Image uploaded");
-        setImagePreview(res?.data?.url);
       });
     }
   };
@@ -71,10 +73,18 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
         <div className="w-96 md:w-1/2 h-fit bg-white fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 rounded shadow-lg">
           <h2 className="font-bold text-lg mb-4">Upload Category</h2>
           <form onSubmit={handleSubmit} className="py-3">
+            <input
+              type="text"
+              name="name"
+              placeholder="Category Name"
+              value={updatedData.name}
+              onChange={handleChange}
+              className="w-full border border-gray-300 outline-yellow-300 bg-blue-50  rounded px-2 py-1 mb-4"
+            />
             <div>
-              {/* <p>image</p> */}
+              <p>image</p>
               <div className="flex flex-col md:flex-row items-center gap-2">
-                <div className="bg-blue-100 w-32 h-30 flex items-center justify-center border border-gray-400 rounded-md my-3">
+                <div className="bg-blue-100 w-32 h-30 flex items-center justify-center border border-gray-400 rounded-md mt-3">
                   {imagePreview ? (
                     <img
                       src={imagePreview}
@@ -87,7 +97,13 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
                 </div>
                 <label htmlFor="uploadCategoryImage">
                   <div
-                    className={`bg-yellow-500 hover:bg-yellow-600 text-white cursor-pointer active:scale-97 px-2 py-1 rounded mt-2 w-fit h-fit
+                    className={`
+                    ${
+                      !updatedData.name
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-yellow-500 hover:bg-yellow-600 text-white cursor-pointer active:scale-97"
+                    }
+                    px-2 py-1 rounded mt-2 w-fit h-fit
                     `}
                   >
                     {imageLoading ? "Uploading..." : "Upload Image"}
@@ -97,20 +113,12 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
                     className="hidden"
                     id="uploadCategoryImage"
                     onChange={handleuploadImage}
-                    // disabled={!data.name}
+                    disabled={!updatedData.name}
                     name="image"
                   />
                 </label>
               </div>
             </div>
-            <input
-              type="text"
-              name="name"
-              placeholder="Category Name"
-              value={data.name}
-              onChange={handleChange}
-              className="w-full border border-gray-300 outline-yellow-300 bg-blue-50  rounded px-2 py-1 mb-4"
-            />
 
             <div className="flex justify-center space-x-2 mt-8">
               <button
@@ -119,16 +127,8 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
               >
                 Cancel
               </button>
-              <button
-                disabled={!data.image}
-                className={` ${
-                  !data.image
-                    ? "cursor-not-allowed"
-                    : "   hover:bg-green-900 cursor-pointer active:scale-97 font-semibold"
-                }
-                px-3 py-1 bg-green-800 rounded text-white `}
-              >
-                {Loading ? "Uploading..." : "Upload"}
+              <button className="px-3 py-1 bg-green-800 text-white rounded hover:bg-green-900 cursor-pointer active:scale-97 font-semibold">
+                {Loading ? "Updating..." : "Update"}
               </button>
             </div>
           </form>
@@ -138,4 +138,4 @@ const UploadCategoryModel = ({ fetchCategories, close }) => {
   );
 };
 
-export default UploadCategoryModel;
+export default EditCategoryModel;
